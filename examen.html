@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evaluación del Curso</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .quiz-container {
+            background: #fff;
+            padding: 2em;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            width: 300px;
+            text-align: center;
+        }
+
+        .quiz-container h1 {
+            margin-bottom: 1em;
+            color: #333;
+        }
+
+        .quiz-container input, .quiz-container select {
+            width: 100%;
+            padding: 0.5em;
+            margin-bottom: 1em;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .quiz-container button {
+            padding: 0.5em 1em;
+            width: 100%;
+            background-color: #6200ea;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .quiz-container button:hover {
+            background-color: #3700b3;
+        }
+
+        .quiz-container ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .quiz-container ul li {
+            margin-bottom: 1em;
+        }
+
+        .result {
+            font-weight: bold;
+            margin-top: 1em;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Evaluación -->
+    <div class="quiz-container">
+        <h1>Evaluación del Curso</h1>
+        <form id="quizForm">
+            <ul>
+                <!-- Pregunta 1 -->
+                <li>
+                    <p>1. ¿Cuál es el propósito de las Ciencias Sociales?</p>
+                    <input type="radio" id="q1a" name="q1" value="correct">
+                    <label for="q1a">Estudiar el comportamiento humano en sociedad</label><br>
+                    <input type="radio" id="q1b" name="q1" value="wrong">
+                    <label for="q1b">Estudiar los procesos físicos de la Tierra</label>
+                </li>
+
+                <!-- Pregunta 2 -->
+                <li>
+                    <p>2. ¿Qué temas se abordan en las Ciencias Sociales? (Selecciona todas las que apliquen)</p>
+                    <input type="checkbox" id="q2a" value="correct">
+                    <label for="q2a">Historia</label><br>
+                    <input type="checkbox" id="q2b" value="wrong">
+                    <label for="q2b">Astronomía</label><br>
+                    <input type="checkbox" id="q2c" value="correct">
+                    <label for="q2c">Antropología</label>
+                </li>
+
+                <!-- Pregunta 3 -->
+                <li>
+                    <p>3. ¿Qué se estudia en la Antropología Social?</p>
+                    <select id="q3">
+                        <option value="wrong">Los fenómenos naturales</option>
+                        <option value="correct">Las culturas y sociedades humanas</option>
+                        <option value="wrong">La genética humana</option>
+                    </select>
+                </li>
+
+                <!-- Pregunta 4 -->
+                <li>
+                    <p>4. ¿Qué disciplina estudia los conflictos políticos y sociales?</p>
+                    <input type="radio" id="q4a" name="q4" value="wrong">
+                    <label for="q4a">Física</label><br>
+                    <input type="radio" id="q4b" name="q4" value="correct">
+                    <label for="q4b">Sociología</label>
+                </li>
+
+                <!-- Pregunta 5 -->
+                <li>
+                    <p>5. ¿Cuál de estos es un video relacionado con las Ciencias Sociales?</p>
+                    <a href="https://www.youtube.com/watch?v=G_9_aVHVSqk" target="_blank">Ver video</a>
+                    <br><br>
+                    <label for="q5">Escribe el nombre del tema del video:</label><br>
+                    <input type="text" id="q5" placeholder="Escribe el tema del video aquí">
+                </li>
+            </ul>
+
+            <button type="submit">Enviar Evaluación</button>
+            <p id="resultMessage" class="result"></p>
+        </form>
+    </div>
+
+    <script>
+        // Evaluación
+        const quizForm = document.getElementById('quizForm');
+        const resultMessage = document.getElementById('resultMessage');
+
+        quizForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+            let score = 0;
+
+            // Pregunta 1
+            if (document.querySelector('input[name="q1"]:checked')?.value === 'correct') score++;
+
+            // Pregunta 2
+            document.querySelectorAll('#q2a, #q2c').forEach((checkbox) => {
+                if (checkbox.checked) score++;
+            });
+
+            // Pregunta 3
+            if (document.getElementById('q3').value === 'correct') score++;
+
+            // Pregunta 4
+            if (document.querySelector('input[name="q4"]:checked')?.value === 'correct') score++;
+
+            // Pregunta 5
+            const q5Answer = document.getElementById('q5').value.trim().toLowerCase();
+            if (q5Answer === 'tema del video') score++;  // Ajusta esto con la respuesta correcta del video
+
+            // Mostrar resultado
+            resultMessage.textContent = `Tu puntaje es: ${score} de 5`;
+        });
+    </script>
+</body>
+</html>
